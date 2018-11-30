@@ -34,6 +34,10 @@
 ;; Note that some cl functions do not have exact replacements,
 ;; e.g. `flet', so further code changes might still be necessary.
 
+;; You can also use `cl-libify-mark-cl-symbols-obsolete' to mark old
+;; `cl' names as obsolete, so that the byte compiler will help flag
+;; their use.
+
 ;;; Code:
 
 
@@ -66,6 +70,17 @@
                        (not (string-prefix-p "cl-" nm)))
              collect (cons s sf)))
   "Alist of symbols pairs mapping cl variables to their cl-lib equivalents.")
+
+(defconst cl-libify-other-functions
+  '(
+    lexical-let
+    lexical-let*
+    flet
+    labels
+    define-setf-expander
+    defsetf
+    define-modify-macro)
+  "Functions from `cl' which have no direct `cl-lib' equivalent.")
 
 (defun cl-libify (beg end)
   "Replace cl symbol names between BEG and END with their cl-lib equivalents.
@@ -104,6 +119,14 @@ non-nil, ask the user to confirm each replacement."
     (or (car (setq ppss (nthcdr 3 ppss)))
         (car (setq ppss (cdr ppss)))
         (nth 3 ppss))))
+
+(defun cl-libify-mark-cl-symbols-obsolete ()
+  "Make all the `cl' vars and functions obsolete so that byte compilation will flag their use."
+  (interactive)
+  (pcase-dolist (`(,old . ,new) cl-libify-function-alias-alist)
+    (make-obsolete old new "cl-lib"))
+  (pcase-dolist (`(,old . ,new) cl-libify-var-alias-alist)
+    (make-obsolete-variable old new "cl-lib")))
 
 
 (provide 'cl-libify)

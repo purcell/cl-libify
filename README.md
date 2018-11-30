@@ -15,6 +15,9 @@ optionally prompting for each
 Note that some cl functions do not have exact replacements,
 e.g. `flet`, so further code changes might still be necessary.
 
+You can also use `cl-libify-mark-cl-symbols-obsolete` to mark old `cl`
+names as obsolete, so that the byte compiler will help flag their use.
+
 ## Installation
 
 ### Manual
