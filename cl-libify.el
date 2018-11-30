@@ -82,6 +82,7 @@
     define-modify-macro)
   "Functions from `cl' which have no direct `cl-lib' equivalent.")
 
+;;;###autoload
 (defun cl-libify (beg end)
   "Replace cl symbol names between BEG and END with their cl-lib equivalents.
 
@@ -120,6 +121,7 @@ non-nil, ask the user to confirm each replacement."
         (car (setq ppss (cdr ppss)))
         (nth 3 ppss))))
 
+;;;###autoload
 (defun cl-libify-mark-cl-symbols-obsolete ()
   "Make all the `cl' vars and functions obsolete so that byte compilation will flag their use."
   (interactive)
