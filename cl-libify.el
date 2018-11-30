@@ -111,7 +111,8 @@ non-nil, ask the user to confirm each replacement."
           (let* ((orig (match-string 1))
                  (replacement (symbol-name (alist-get (intern orig) alist))))
             (when (or (null prompt)
-                      (save-match-data (y-or-n-p (format "Replace `%s' with `%s'?" orig replacement))))
+                      (let ((msg (format "Replace `%s' with `%s'?" orig replacement)))
+                        (save-match-data (y-or-n-p msg))))
               (replace-match replacement t t nil 1))))))))
 
 (defun cl-libify--in-string-or-comment ()
