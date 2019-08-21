@@ -25,7 +25,7 @@ names as obsolete, so that the byte compiler will help flag their use.
 Ensure `cl-libify.el` is in a directory on your load-path, and
 add the following to your `~/.emacs` or `~/.emacs.d/init.el`:
 
-``` lisp
+```elisp
 (require 'cl-libify)
 ```
 
